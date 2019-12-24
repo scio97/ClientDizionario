@@ -1,0 +1,32 @@
+.menu{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.collegamento_menu{
+    float: left;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+.collegamento_menu:hover{
+	background-color: #111;
+}
+.utente_menu {
+    float: right;
+    display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+.utente_menu:hover {
+    background-color: rgb(84, 107, 114);
+}
