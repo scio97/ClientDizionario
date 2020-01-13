@@ -1,52 +1,38 @@
 <?php
 //////////LOGIN//////////
 function login(){
-    include("connessione.php");
     $user = $_GET["user"];
     $password = $_GET["password"];
-    while($recordset2->EOF == FALSE){
-        if($recordset2->fields["user"]->value==$user){
-            if($recordset2->fields["password"]->value==$password){
-                session_start();
-                $session_id=session_id();
-                $connessione->execute("UPDATE utenti SET idtmp = '$session_id' WHERE user = '$user'");
-                return 0;
-            }else{
-                return 1;
-            }
+    $url = "https://apidizionario.herokuapp.com?mod=login&user=$user&password=$password";
+    $file = file_get_contents($url);
+    $risposta = json_decode($file);
+    if($risposta->risultato=="ok"){
+        $_SESSION["user"]=strtoupper($user);
+        $_SESSION["tipo"]=$risposta->tipo;
+        return 0;
+    }else{
+        if($risposta->risultato=="passworderr"){
+            return 1;
+        }else{
+            return 2;
         }
-        $recordset2->movenext();
     }
-    return 2;
 }
 //////////MENU//////////
 function menu(){
-echo"<ul class='menu'>";
-echo"<li><a href='index.php' class='collegamento_menu'>Home</a></li>";
-//echo"<li>".menu_accesso()."</li>";
-echo"</ul>";
+    echo"<ul class='menu'>";
+    echo"<li><a href='index.php' class='collegamento_menu'>HOME</a></li>";
+    echo"<li>".menu_accesso()."</li>";
+    echo"<li><a href='logout.php' class='utente_menu'>LOGOUT</a></li>";
+    echo"</ul>";
 }
 //////////MENU_ACCESSO//////////
 function menu_accesso(){
-    include("connessione.php");
-    while($recordset2->EOF == FALSE){
-        if(session_id()==$recordset2->fields["idtmp"]->value){
-            return "<a href='accesso.php' class='utente_menu'>".$recordset2->fields['user']->value."<a>";
-        }
-        $recordset2->movenext();
+    if(isset($_SESSION["user"])){
+        return "<a href='accesso.php' class='utente_menu'>".$_SESSION["user"]."<a>";
+    }else{
+        return "<a href='accesso.php' class='utente_menu'>ACCEDI</a>";
     }
-    return "<a href='accesso.php' class='utente_menu'>ACCEDI</a>";
-}
-//////////CHECK_LOGIN//////////
-function check_login(){
-    include("connessione.php");
-    while($recordset2->EOF == FALSE){
-        if($recordset2->fields["idtmp"]->value==session_id()){
-            return true;
-        }
-        $recordset2->movenext();
-    }
-    return false;
 }
 //////////CERCA//////////
 function cerca(){
@@ -114,6 +100,7 @@ function cookies(){
     }
 }
 ?>
+
 <script>
 function select(){
     var x = document.getElementById("mod").value;
@@ -129,6 +116,17 @@ function select(){
     if(x=="modifica"){
         document.getElementById("form").innerHTML = '<p>Termine da modificare:</p><input type="text" name="termine" required><p>Inserisci significato: </p><input type="text" name="significato" required><br><br><input type="submit">'
     }
+    <?php
+    if(!isset($_SESSION["tipo"])){
+        echo 'document.getElementById("aggiungi").disabled="disabled";';
+        echo 'document.getElementById("modifica").disabled="disabled";';
+        echo 'document.getElementById("elimina").disabled="disabled";';
+    }
+    if($_SESSION["tipo"]=="ospite"){
+        echo 'document.getElementById("modifica").disabled="disabled";';
+        echo 'document.getElementById("elimina").disabled="disabled";'; 
+    }
+    ?>
 }
 function accesso_negato(get){
     if(get["err"]=="unr"){
