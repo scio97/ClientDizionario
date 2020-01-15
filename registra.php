@@ -10,12 +10,12 @@
     </head>
     <body onload="accesso_negato(get())">
             <br><br><h1>Dizionario PHP con API e MySQL</h1>
-            <h3>Inserisci le credenziali per accedere</h3>
-            <form action="login.php" method="GET">
+            <h3>Inserisci le credenziali per registrarti</h3>
+            <form action="reg.php" method="GET">
                 <span>Utente:</span>
-                <input type="text" name="user" required><span id="user"></span>
+                <input type="text" name="user" required><span id="ugr"></span>
                 <br><br><span>Password:</span>
-                <input type="password" name="password" required><span id="password"></span>
+                <input type="password" name="password" required>
                 <br><br>
                 <input type="submit">
             </form>

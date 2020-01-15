@@ -1,4 +1,19 @@
 <?php
+//////////REGISTRA//////////
+function registra(){
+    $user = $_GET["user"];
+    $password = $_GET["password"];
+    $url = "https://apidizionario.herokuapp.com?mod=registra&user=$user&password=$password";
+    $file = file_get_contents($url);
+    $risposta = json_decode($file);
+    if($risposta->risultato==true){
+        $_SESSION["user"]=strtoupper($user);
+        $_SESSION["tipo"]="ospite";
+        return 0;
+    }else{
+        return 1;
+    }
+}
 //////////LOGIN//////////
 function login(){
     $user = $_GET["user"];
@@ -23,7 +38,11 @@ function menu(){
     echo"<ul class='menu'>";
     echo"<li><a href='index.php' class='collegamento_menu'>HOME</a></li>";
     echo"<li>".menu_accesso()."</li>";
-    echo"<li><a href='logout.php' class='utente_menu'>LOGOUT</a></li>";
+    if(isset($_SESSION["user"])){
+        echo"<li><a href='logout.php' class='utente_menu'>LOGOUT</a></li>";
+    }else{
+        echo"<li><a href='registra.php' class='utente_menu'>REGISTRATI</a></li>";
+    }
     echo"</ul>";
 }
 //////////MENU_ACCESSO//////////
@@ -130,10 +149,13 @@ function select(){
 }
 function accesso_negato(get){
     if(get["err"]=="unr"){
-        document.getElementById("user").innerHTML ="utente non registrato";
+        document.getElementById("user").innerHTML =" Utente non registrato";
     }
     if(get["err"]=="pe"){
-        document.getElementById("password").innerHTML ="password errata";
+        document.getElementById("password").innerHTML =" Password errata";
+    }
+    if(get["err"]=="ugr"){
+        document.getElementById("ugr").innerHTML =" Utente già registrato";
     }
 }
 function get(){
