@@ -63,6 +63,7 @@ function cerca(){
     echo"<p>Termine ricercato: ". $termine ."</p>";
     if($risposta->significato!=null){
         echo"<p>Risultato ricerca: ".$risposta->significato."</p>";
+        echo"<p>Termine aggiunto da: ".$risposta->utente."</p>";
     }else{
         echo"<p>Nessun risultato</p>";
     }
@@ -71,7 +72,8 @@ function cerca(){
 function aggiungi(){
     $termine = $_GET["termine"];
     $significato = $_GET["significato"];
-    $url = "https://apidizionario.herokuapp.com?mod=aggiungi&termine=$termine&significato=$significato";
+    $utente = $_SESSION["user"];
+    $url = "https://apidizionario.herokuapp.com?mod=aggiungi&termine=$termine&significato=$significato&utente=$utente";
     $file = file_get_contents($url);
     $risposta = json_decode($file);
     if($risposta->risultato){
