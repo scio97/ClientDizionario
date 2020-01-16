@@ -9,7 +9,7 @@
         ?>
     </head>
     <body>
-        <div class="pagina">
+        <div class='pagina'>
             <br><br><h1>Dizionario PHP con API e MySQL</h1>
             <?php  
                 if($_GET["mod"]=="cerca"){

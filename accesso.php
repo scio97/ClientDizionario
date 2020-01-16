@@ -9,7 +9,7 @@
         ?>
     </head>
     <body onload="accesso_negato(get())">
-        <div class="pagina">
+        <div class='pagina'>
             <br><br><h1>Dizionario PHP con API e MySQL</h1>
             <h3>Inserisci le credenziali per accedere</h3>
             <form action="login.php" method="GET">
