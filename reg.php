@@ -10,14 +10,16 @@
         ?>
     </head>
     <body>
-        <br><br><h1>Dizionario PHP con API e MySQL</h1>
-        <?php
-            if($controllo==0){
-                echo "Utente registrato";
-            }
-            if($controllo==1){
-                header("location: /registra.php?err=ugr");
-            }
-        ?>
+        <div class="pagina">
+            <br><br><h1>Dizionario PHP con API e MySQL</h1>
+            <?php
+                if($controllo==0){
+                    echo "Utente registrato";
+                }
+                if($controllo==1){
+                    header("location: /registra.php?err=ugr");
+                }
+            ?>
+        </div>
     </body>
 </html>

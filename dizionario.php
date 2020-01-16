@@ -9,22 +9,22 @@
         ?>
     </head>
     <body>
-        <center>
-        <br><br><h1>Dizionario PHP con API e MySQL</h1>
-        <?php  
-            if($_GET["mod"]=="cerca"){
-                cerca();
-            }
-            if($_GET["mod"]=="aggiungi"){
-                aggiungi();
-            }
-            if($_GET["mod"]=="modifica"){
-                modifica();
-            }
-            if($_GET["mod"]=="elimina"){
-                elimina();
-            }
-        ?>
-        </center>
+        <div class="pagina">
+            <br><br><h1>Dizionario PHP con API e MySQL</h1>
+            <?php  
+                if($_GET["mod"]=="cerca"){
+                    cerca();
+                }
+                if($_GET["mod"]=="aggiungi"){
+                    aggiungi();
+                }
+                if($_GET["mod"]=="modifica"){
+                    modifica();
+                }
+                if($_GET["mod"]=="elimina"){
+                    elimina();
+                }
+            ?>
+        </div>
     </body>
 </html>

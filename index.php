@@ -9,7 +9,7 @@
         ?>
     </head>
     <body onload="select()">
-        <center>
+        <div class="pagina">
             <br><br><h1>Dizionario PHP con API e MySQL</h1>
             <form action="dizionario.php" method="GET">
                 <select name="mod" id="mod" onChange="select()">
@@ -20,6 +20,6 @@
                 </select>
                 <p id="form"></p>
             </form>
-        </center>
+        </div>
     </body>
 </html>
