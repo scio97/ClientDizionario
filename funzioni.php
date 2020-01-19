@@ -86,25 +86,35 @@ function aggiungi(){
 function modifica(){
     $termine = $_GET["termine"];
     $significato = $_GET["significato"];
-    $url = "https://apidizionario.herokuapp.com?mod=modifica&termine=$termine&significato=$significato";
+    $utente = $_SESSION["user"];
+    $url = "https://apidizionario.herokuapp.com?mod=modifica&termine=$termine&significato=$significato&utente=$utente";
     $file = file_get_contents($url);
     $risposta = json_decode($file);
-    if($risposta->risultato){
+    if($risposta->risultato==0){
         echo"<p>Termine modificato</p>";
     }else{
-        echo"<p>Termine non presente</p>";
+        if($risposta->risultato==1){
+            echo"<p>Modifica non autorizzata</p>";
+        }else{
+            echo"<p>Termine non presente</p>";
+        }
     }
 }
 //////////ELIMINA//////////
 function elimina(){
     $termine = $_GET["termine"];
-    $url = "https://apidizionario.herokuapp.com?mod=elimina&termine=$termine";
+    $utente = $_SESSION["user"];
+    $url = "https://apidizionario.herokuapp.com?mod=elimina&termine=$termine&utente=$utente";
     $file = file_get_contents($url);
     $risposta = json_decode($file);
-    if($risposta->risultato){
+    if($risposta->risultato==0){
         echo"<p>Termine eliminato</p>";
     }else{
-        echo"<p>Termine non presente</p>";
+        if($risposta->risultato==1){
+            echo"<p>Eliminazione non autorizzata</p>";
+        }else{
+            echo"<p>Termine non presente</p>";
+        }
     }
 }
 //////////COOKIES//////////
@@ -142,10 +152,6 @@ function select(){
         echo 'document.getElementById("aggiungi").disabled="disabled";';
         echo 'document.getElementById("modifica").disabled="disabled";';
         echo 'document.getElementById("elimina").disabled="disabled";';
-    }
-    if($_SESSION["tipo"]=="ospite"){
-        echo 'document.getElementById("modifica").disabled="disabled";';
-        echo 'document.getElementById("elimina").disabled="disabled";'; 
     }
     ?>
 }
